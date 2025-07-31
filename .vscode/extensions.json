@@ -1,5 +1,8 @@
 {
   "recommendations": [
-    "charliermarsh.ruff"
+    "charliermarsh.ruff",
+    "usernamehw.errorlens",
+    "mosapride.zenkaku",
+    "aaron-bond.better-comments"
   ]
 }
