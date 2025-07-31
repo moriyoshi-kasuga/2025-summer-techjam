@@ -1,0 +1,22 @@
+{
+  "files.eol": "\n",
+  "python.analysis.autoImportCompletions": true,
+  "python.defaultInterpreterPath": "venv/bin/python",
+  "python.analysis.typeCheckingMode": "basic",
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.rulers": [
+      88
+    ],
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+  "files.associations": {
+    "**/requirements{/**,*}.{txt,in}": "pip-requirements"
+  }
+}
