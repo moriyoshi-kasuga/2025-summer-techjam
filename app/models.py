@@ -40,3 +40,9 @@ class Report(db.Model):
 
     reason = db.Column(db.String(256), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, server_default=db.func.now())
+
+class Favorite(db.Model):
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), primary_key=True)
+
+    created_at = db.Column(db.DateTime, nullable=False, server_default=db.func.now())
