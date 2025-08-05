@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400..800&family=Zen+Maru+Gothic&display=swap');
 
+@font-face {
+  font-family: 'ChiruFont';
+  src: url('/static/fonts/chirufont.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+}
+
 :root {
   --site-background-color: linear-gradient(0.75turn, #78A782 0%, #529664 37%, #70C381 68%, #98C99F 100%, #BEDFC2 100%);
   --site-edge-color: #3B5B46;
@@ -41,5 +48,10 @@ body> :not(.edge) {
 
 .font-zenmaru {
   font-family: "Zen Maru Gothic", sans-serif;
+  font-optical-sizing: auto;
+}
+
+.font-chiru {
+  font-family: "ChiruFont", sans-serif;
   font-optical-sizing: auto;
 }
