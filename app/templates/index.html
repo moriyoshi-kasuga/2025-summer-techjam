@@ -1,23 +1,37 @@
-<!DOCTYPE html>
-<html lang="ja">
+{% extends "base.html" %}
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>enikki</title>
-    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
-  </head>
+{% block head %}
+<style>
+  body {
+    background: #ffffff;
+    position: relative;
+  }
+  h1 {
+    font-size: 64px;
+    font-family: "font-zenmaru";
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    left: 16%;
+    top: 43%;
+    color: #5F5C5C;
+  }
+  h2 {
+    font-size: 44px;
+    display: flex;
+    position: absolute;
+    right: 11%;
+    top: 10%;
+    writing-mode: vertical-rl;
+    font-weight: 100;
+  }
+</style>
+{% endblock head %}
 
-  <body>
-    <header>
-      <h1>enikki</h1>
-    </header>
-    <main>
-      <p>ようこそ、enikkiへ！</p>
-    </main>
-    <footer>
-      <p>&copy; 2025 enikki</p>
-    </footer>
-  </body>
+{% block body %}
 
-</html>
+<h1 class="font-balooda">enikki</h1>
+<h2 class="font-hui">{{ word }}</h2>
+
+{% endblock body %}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>enikki</title>
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    {% block head %}
+    {% endblock %}
+  </head>
+
+  <body>
+    <div class="edge"></div>
+    <div id="container">
+      {% block body %}
+      {% endblock %}
+    </div>
+    <div class="edge"></div>
+  </body>
+
+</html>

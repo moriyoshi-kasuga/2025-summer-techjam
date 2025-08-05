@@ -208,4 +208,6 @@ __marimo__/
 
 
 # User Added
-migrations
+migrations/
+app/views/images/
+.DS_Store
