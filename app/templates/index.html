@@ -17,12 +17,14 @@
     top: 43%;
     color: #5F5C5C;
   }
-  img {
-    width: 6%;
+  h2 {
+    font-size: 44px;
+    display: flex;
     position: absolute;
     right: 11%;
-    top: 14%;
-    filter: brightness(100%);
+    top: 10%;
+    writing-mode: vertical-rl;
+    font-weight: 100;
   }
 </style>
 {% endblock head %}
@@ -30,7 +32,7 @@
 {% block body %}
 
 <h1 class="font-balooda">enikki</h1>
-<img src="{{ img1 }}" alt="">
+<h2 class="font-hui">きょうは、はなび大会にいきました。</h2>
 <!-- ここのimg1には static/images からランダムな画像の url を受け取りいれる。 -->
 
 {% endblock body %}
