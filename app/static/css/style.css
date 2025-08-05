@@ -45,8 +45,8 @@ body> :not(.edge) {
   filter: grayscale(100%);
   mix-blend-mode: multiply;
   position: absolute;
-  left: var(--edge-width);
-  top: 0px;
+  left: 0;
+  top: 0;
   width: 100dvw;
   height: 100dvh;
   z-index: -1;
