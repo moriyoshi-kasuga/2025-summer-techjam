@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400..800&family=Zen+Maru+Gothic&display=swap');
+
 :root {
   --site-background-color: linear-gradient(0.75turn, #78A782 0%, #529664 37%, #70C381 68%, #98C99F 100%, #BEDFC2 100%);
   --site-edge-color: #3B5B46;
@@ -30,4 +32,14 @@ body>.edge {
 
 body> :not(.edge) {
   width: calc(100dvw - var(--edge-width) * 2);
+}
+
+.font-balooda {
+  font-family: "Baloo Da 2", sans-serif;
+  font-optical-sizing: auto;
+}
+
+.font-zenmaru {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-optical-sizing: auto;
 }
