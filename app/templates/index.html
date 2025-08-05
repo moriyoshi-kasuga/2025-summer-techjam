@@ -4,12 +4,33 @@
 <style>
   body {
     background: #ffffff;
+    position: relative;
+  }
+  h1 {
+    font-size: 64px;
+    font-family: "font-zenmaru";
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    left: 16%;
+    top: 43%;
+    color: #5F5C5C;
+  }
+  img {
+    width: 6%;
+    position: absolute;
+    right: 11%;
+    top: 14%;
+    filter: brightness(100%);
   }
 </style>
 {% endblock head %}
 
 {% block body %}
 
-<h1>Welcome to My Application</h1>
+<h1 class="font-balooda">enikki</h1>
+<img src="{{ img1 }}" alt="">
+<!-- ここのimg1には static/images からランダムな画像の url を受け取りいれる。 -->
 
 {% endblock body %}
