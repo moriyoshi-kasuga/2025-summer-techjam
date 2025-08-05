@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400..800&family=Zen+Maru+Gothic&display=swap');
 
 @font-face {
-  font-family: 'ChiruFont';
-  src: url('/static/fonts/chirufont.ttf') format('truetype');
+  font-family: 'HuiFont';
+  src: url('/static/fonts/HuiFont29.ttf') format('truetype');
   font-style: normal;
   font-weight: normal;
 }
@@ -51,7 +51,7 @@ body> :not(.edge) {
   font-optical-sizing: auto;
 }
 
-.font-chiru {
-  font-family: "ChiruFont", sans-serif;
+.font-hui {
+  font-family: "HuiFont", sans-serif;
   font-optical-sizing: auto;
 }

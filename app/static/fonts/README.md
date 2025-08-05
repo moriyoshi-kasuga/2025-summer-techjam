@@ -1,8 +1,3 @@
 # Fonts
 
-## [ちるふぉんと](./chirufont.ttf) - [https://573.booth.pm/items/2884710](https://573.booth.pm/items/2884710)
-
-> ・個人利用・商用利用OKです。無償で使用することができます。
->・このフォントを使用しサービスとして提供することも可能です。
->・障害・損害についてこちらは一切の責任を負わないものとします。
->・著作権は放棄していません。
+- [ふい字P](./HuiFont29.ttf) - [https://www.vector.co.jp/soft/data/writing/se347444.html](https://www.vector.co.jp/soft/data/writing/se347444.html)
