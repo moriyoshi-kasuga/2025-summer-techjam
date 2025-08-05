@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block head %}
+  <style>
+    #mypage {
+      width: 80%;
+      margin: 0 auto;
+    }
+    .name__line {
+      width: 100%;
+      height: 6px;
+      border-radius: 2px;
+      background-color: #ffffff;
+      margin: 0 0 20px 0;
+    }
+    .name__block > * {
+      margin: 0;
+      padding: 0;
+    }
+    .name__block {
+      margin: 20px 0 3px 0;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+    }
+    .name__title {
+      font-size: 2.5rem;
+      color: #ffffff;
+    }
+    .name__username {
+      font-size: 3.5rem;
+      color: #ffffff;
+    }
+  </style>
+{% endblock head %}
+{% block body %}
+  <div id="mypage">
+    <div class="name__block font-zenmaru">
+      <h2 class="name__title">なまえ</h2>
+      <h1 class="name__username">サンプルネーム</h1>
+      <h3 class="name__change">変更する</h3>
+    </div>
+    <div class="name__line"></div>
+  </div>
+{% endblock body %}
