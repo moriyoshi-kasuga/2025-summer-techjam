@@ -1,102 +1,110 @@
 {% extends "base.html" %}
 {% block head %}
-  <style>
-    #mypage {
-      width: 80%;
-      margin: 0 auto;
-    }
-    .name__line {
-      width: 100%;
-      height: 6px;
-      border-radius: 2px;
-      background-color: #ffffff;
-      margin: 0 0 20px 0;
-    }
-    .name__block > * {
-      margin: 0;
-      padding: 0;
-    }
-    .name__block {
-      margin: 20px 0 3px 0;
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-    }
-    .name__title {
-      font-size: 2.5rem;
-      color: #ffffff;
-    }
-    .name__username {
-      font-size: 3.5rem;
-      color: #ffffff;
-    }
+<style>
+  #mypage {
+    width: 80%;
+    margin: 0 auto;
+  }
 
-    .daily__title {
-      font-size: 2.7rem;
-      color: #ffffff;
-      margin: 40px 0;
-      text-align: center;
-    }
-    .daily__list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content:space-between;
-      row-gap: 20px;
-      column-gap: 20px;
-    }
-    .daily__item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 300px;
-    }
-    .daily__date {
-      font-size: 1.8rem;
-      color: #ffffff;
-      margin: 0;
-    }
+  .name__line {
+    width: 100%;
+    height: 6px;
+    border-radius: 2px;
+    background-color: #ffffff;
+    margin: 0 0 20px 0;
+  }
 
-    .hamburger {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
-      z-index: 1000;
-    }
-  </style>
+  .name__block>* {
+    margin: 0;
+    padding: 0;
+  }
+
+  .name__block {
+    margin: 20px 0 3px 0;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+  }
+
+  .name__title {
+    font-size: 2.5rem;
+    color: #ffffff;
+  }
+
+  .name__username {
+    font-size: 3.5rem;
+    color: #ffffff;
+  }
+
+  .daily__title {
+    font-size: 2.7rem;
+    color: #ffffff;
+    margin: 40px 0;
+    text-align: center;
+  }
+
+  .daily__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 20px;
+    column-gap: 20px;
+  }
+
+  .daily__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+  }
+
+  .daily__date {
+    font-size: 1.8rem;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .hamburger {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+</style>
 {% endblock head %}
 {% block body %}
-  <div class="hamburger">
-    <img src="/static/icons/hamburger.svg" alt="Menu Icon">
+<div class="hamburger">
+  <img src="/static/icons/hamburger.svg" alt="Menu Icon">
+</div>
+<div id="mypage">
+  <div class="name__block font-zenmaru">
+    <h2 class="name__title">なまえ</h2>
+    <h1 class="name__username">サンプルネーム</h1>
+    <h3 class="name__change">変更する</h3>
   </div>
-  <div id="mypage">
-    <div class="name__block font-zenmaru">
-      <h2 class="name__title">なまえ</h2>
-      <h1 class="name__username">サンプルネーム</h1>
-      <h3 class="name__change">変更する</h3>
+  <div class="name__line"></div>
+  <h2 class="daily__title font-zenmaru">これまでのえにっき</h2>
+  <div class="daily__list font-zenmaru">
+    <!-- TODO: ここに jinja の loop のテンプレートで複数表示する -->
+    <div class="daily__item">
+      <h3 class="daily__date">10月5日</h3>
+      <img class="daily__image" src="https://placehold.jp/300x200.png" alt="Sample Image">
     </div>
-    <div class="name__line"></div>
-    <h2 class="daily__title font-zenmaru">これまでのえにっき</h2>
-    <div class="daily__list font-zenmaru">
-      <!-- TODO: ここに jinja の loop のテンプレートで複数表示する -->
-      <div class="daily__item">
-        <h3 class="daily__date">10月5日</h3>
-        <img class="daily__image" src="https://placehold.jp/300x200.png" alt="Sample Image">
-      </div>
-      <div class="daily__item">
-        <h3 class="daily__date">10月4日</h3>
-        <img class="daily__image" src="https://placehold.jp/300x200.png" alt="Sample Image">
-      </div>
-      <div class="daily__item">
-        <h3 class="daily__date">10月3日</h3>
-        <img class="daily__image" src="https://placehold.jp/300x200.png" alt="Sample Image">
-      </div>
-      <div class="daily__item">
-        <h3 class="daily__date">10月2日</h3>
-        <img class="daily__image" src="https://placehold.jp/300x200.png" alt="Sample Image">
-      </div>
+    <div class="daily__item">
+      <h3 class="daily__date">10月4日</h3>
+      <img class="daily__image" src="https://placehold.jp/300x200.png" alt="Sample Image">
+    </div>
+    <div class="daily__item">
+      <h3 class="daily__date">10月3日</h3>
+      <img class="daily__image" src="https://placehold.jp/300x200.png" alt="Sample Image">
+    </div>
+    <div class="daily__item">
+      <h3 class="daily__date">10月2日</h3>
+      <img class="daily__image" src="https://placehold.jp/300x200.png" alt="Sample Image">
     </div>
   </div>
+</div>
 {% endblock body %}
