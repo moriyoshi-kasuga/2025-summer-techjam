@@ -1,4 +1,33 @@
-h1 {
-  color: blue;
-  font-size: 2em;
+:root {
+  --site-background-color: linear-gradient(0.75turn, #78A782 0%, #529664 37%, #70C381 68%, #98C99F 100%, #BEDFC2 100%);
+  --site-edge-color: #3B5B46;
+
+  --background-color: #D9D9D9;
+  --input-color: #A4A0A0;
+  --text-color: #ffffff;
+  --button-color: #C13535;
+
+  --edge-width: 80px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--site-background-color);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  width: 100dvw;
+}
+
+body>.edge {
+  background: var(--site-edge-color);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  width: var(--edge-width);
+  height: 100dvh;
+}
+
+body> :not(.edge) {
+  width: calc(100dvw - var(--edge-width) * 2);
 }

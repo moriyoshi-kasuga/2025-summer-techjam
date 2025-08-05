@@ -1,23 +1,15 @@
-<!DOCTYPE html>
-<html lang="ja">
+{% extends "base.html" %}
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>enikki</title>
-    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
-  </head>
+{% block head %}
+<style>
+  body {
+    background: #ffffff;
+  }
+</style>
+{% endblock head %}
 
-  <body>
-    <header>
-      <h1>enikki</h1>
-    </header>
-    <main>
-      <p>ようこそ、enikkiへ！</p>
-    </main>
-    <footer>
-      <p>&copy; 2025 enikki</p>
-    </footer>
-  </body>
+{% block body %}
 
-</html>
+<h1>Welcome to My Application</h1>
+
+{% endblock body %}
