@@ -4,38 +4,143 @@
 <link href="/static/css/enikki.css" rel="stylesheet">
 <style>
   .container {
-    margin-block: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 100px;
+    display: grid;
+    /* 3列グリッドを作成: 左余白 | 中央コンテンツ | 右余白/コメント */
+    grid-template-columns: 1fr auto 1fr;
+    align-items: start;
+    /* 上端揃え */
+    gap: 50px;
+    /* 列間のギャップ */
+    width: 100%;
+    padding: 10dvh 20px;
+    /* 左右の余白 */
+    box-sizing: border-box;
+    height: 100dvh;
   }
 
-  .comment {
+  .enikki-wrapper {
+    grid-column: 2;
+    /* 絵日記を中央の列に配置 */
+  }
+
+  .comment-section {
+    grid-column: 3;
+    /* コメントを右の列に配置 */
+    justify-self: start;
+    /* 列の左端に配置 */
     color: white;
     font-family: "Zen Maru Gothic", sans-serif;
-    font-size: 48px;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .comment-list {
     list-style: none;
-    margin-bottom: 50px;
+    padding: 0;
+    max-height: 500px;
+    /* 高さを制限してスクロール可能に */
+    overflow-y: auto;
+  }
+
+  .comment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-right: 10px;
+    /* スクロールバーとの余白 */
+  }
+
+  .comment-item.hidden .comment-content {
+    color: #888;
+    font-style: italic;
+  }
+
+  .comment-content {
+    margin-left: 10px;
+  }
+
+  .hide-btn {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background-color: #555;
+    color: white;
+    cursor: pointer;
+    flex-shrink: 0;
+    /* ボタンが縮まないように */
+  }
+
+  .hide-btn:disabled {
+    background-color: #333;
+    color: #888;
+    cursor: not-allowed;
   }
 </style>
 {% endblock head %}
 
 {% block body %}
 
-{% include "title-enikki.html" %}
-
 <div class="container">
+  <div class="enikki-wrapper">
+    {% with month=post.created_at.month, day=post.created_at.day, content=post.content, image_id=post.id %}
+    {% include 'enikki.html' %}
+    {% endwith %}
+  </div>
 
-  {% with month=post.created_at.month, day=post.created_at.day, content=post.content, image_id=post.id %}
-  {% include 'enikki.html' %}
-  {% endwith %}
-
-  <ul>
-    {% for comment in comments %}
-    <li class="comment">{{ comment }}</li>
-    {% endfor %}
-  </ul>
+  <div class="comment-section">
+    <h2>コメント</h2>
+    <ul class="comment-list" id="comment-list">
+      {% for data in comments_data %}
+      <li class="comment-item {% if data.is_hidden %}hidden{% endif %}" id="comment-{{ data.comment.id }}">
+        <span class="comment-content">{{ data.comment.content }}</span>
+        <button class="hide-btn" data-comment-id="{{ data.comment.id }}" {% if data.is_hidden %}disabled{% endif %}>
+          {% if data.is_hidden %}非表示済み{% else %}非表示にする{% endif %}
+        </button>
+      </li>
+      {% else %}
+      <li>まだコメントはありません。</li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const commentList = document.getElementById('comment-list');
+
+    commentList.addEventListener('click', (e) => {
+      const hideBtn = e.target.closest('.hide-btn');
+      if (hideBtn && !hideBtn.disabled) {
+        hideComment(hideBtn);
+      }
+    });
+
+    function hideComment(button) {
+      const commentId = button.dataset.commentId;
+
+      if (!confirm('このコメントを非表示にしますか？元に戻せません。')) {
+        return;
+      }
+
+      fetch(`/details/comment/${commentId}/hide`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            const commentItem = document.getElementById(`comment-${commentId}`);
+            commentItem.classList.add('hidden');
+            button.textContent = '非表示済み';
+            button.disabled = true;
+          } else {
+            alert('エラー: ' + (data.error || 'コメントの非表示に失敗しました。'));
+          }
+        })
+        .catch(err => console.error('Hide comment failed:', err));
+    }
+  });
+</script>
 
 {% endblock body %}
