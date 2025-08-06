@@ -85,6 +85,11 @@
     color: #e74c3c;
     text-decoration: none;
   }
+  .error-message {
+    color: red;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
 </style>
 {% endblock head %}
 
@@ -92,6 +97,10 @@
 <div id="root">
   <div class="container">
     <div class="login-box">
+      {% if error %}
+      <p class="error-message">{{ error }}</p>
+      {% endif %}
+
       <h1 class="font-balooda">enikki</h1>
       <form action="#" method="post">
         <label for="email">メールアドレス</label>
@@ -107,7 +116,7 @@
 
       <p class="register">
         アカウントが未登録ですか？
-        <a href="#">アカウントの作成</a>
+        <a href="http://127.0.0.1:3000/signup">アカウントの作成</a>
       </p>
     </div>
   </div>
