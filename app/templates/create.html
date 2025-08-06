@@ -18,6 +18,11 @@
     left: 16%;
     top: 43%;
     color: #5F5C5C;
+    transition: color 3s ease;
+  }
+
+  h1.fade-in{
+    color: #fff;
   }
 
   .page-wrapper {
@@ -39,7 +44,7 @@
     flex-direction: column;
     align-items: center;
     opacity: 0;
-    transition: opacity 2s ease;
+    transition: opacity 3s ease;
   }
 
   .fade-in{
@@ -220,12 +225,14 @@
 
 {% block body %}
 
-<h1 class="font-balooda">enikki</h1>
+<h1 class="font-balooda" id="fadein-text">enikki</h1>
 <script>
   window.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(() => {
       const enikki = document.getElementById('fadein-item'); 
+      const title = document.getElementById('fadein-text'); 
       enikki.classList.add("fade-in");
+      title.classList.add("fade-in");
     });
   });
 </script>
