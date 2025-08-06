@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, render_template, request
-from flask_login import current_user
+from flask_login import current_user, login_required
 
 from app import db
 from app.models import Post, User
@@ -9,9 +9,8 @@ blueprint = Blueprint("create", __name__)
 
 
 @blueprint.route("/", methods=["GET", "POST"])
+@login_required
 def create():
-    if current_user is None:
-        return redirect("/login")
     user: User = current_user
     if request.method == "GET":
         return render_template("create.html")
