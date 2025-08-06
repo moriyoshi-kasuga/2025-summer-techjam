@@ -73,10 +73,22 @@
     pointer-events: auto;
   }
 </style>
+<link href="/static/css/enikki.css" rel="stylesheet">
 {% endblock head %}
 
 {% block body %}
 <h1 class="font-balooda">enikki</h1>
+
+<ul>
+  {% for view in views %}
+  <li>{{ view.is_favorite }}</li>
+  <li>{{ view.comment }}</li>
+  {% with month=view.post.created_at.month, day=view.post.created_at.day, content=view.post.content %}
+  {% include 'enikki.html' %}
+  {% endwith %}
+  {% endfor %}
+</ul>
+
 
 <div class="button-container">
   <button class="circle-btn">
