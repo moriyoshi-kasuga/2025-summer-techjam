@@ -176,12 +176,12 @@
 {% block body %}
 
 <div class="background" id="fedeout-bg"></div>
-<h1 class="font-balooda" id="fadein-text">enikki</h1>
+{% include "title-enikki.html" %}
 <script>
   window.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(() => {
       const enikki = document.getElementById('fadein-item');
-      const title = document.getElementById('fadein-text');
+      const title = document.getElementById('title-enikki');
       const bg = document.getElementById('fedeout-bg');
       enikki.classList.add("fade-in");
       title.classList.add("fade-in");
