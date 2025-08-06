@@ -211,3 +211,4 @@ __marimo__/
 migrations/
 app/views/images/
 .DS_Store
+app/static/js/simple-drawing-board.min.js
