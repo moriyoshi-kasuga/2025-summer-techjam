@@ -12,7 +12,15 @@
 
   <body>
     <div class="edge"></div>
-    <img id="texture" src="/static/images/texture1.jpg"></img>
+    <img id="texture" src="/static/images/texture1.jpg">
+    <div class="menuber">
+      <ul>
+        <li><a href="/"><img src="/static/icons/home.png" alt=""></a></li>
+        <li><a href="/create"><img src="/static/icons/pencil.png" alt=""></a></li>
+        <li><a href="/view"><img src="/static/icons/hanamaru.png" alt=""></a></li>
+        <li><a href="/mypage"><img src="/static/icons/user.png" alt=""></a></li>
+      </ul>
+    </div>
     <div id="container">
       {% block body %}
       {% endblock %}

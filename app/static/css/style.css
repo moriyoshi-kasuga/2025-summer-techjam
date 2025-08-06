@@ -52,6 +52,26 @@ body> :not(.edge) {
   z-index: -1;
 }
 
+.menuber{
+  position: absolute;
+  left: -25px;
+  top: 10px;
+  ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  img{
+    width: 50px;
+    transition: .3s;
+    &:hover{
+      filter: brightness(200%);
+      scale: 1.1;
+    }
+  }
+}
+
 .font-balooda {
   font-family: "Baloo Da 2", sans-serif;
   font-optical-sizing: auto;
