@@ -3,17 +3,10 @@
 {% block head %}
 <style>
   /* 基本レイアウトとフォント */
-  .font-balooda {
-    font-size: 60px;
-    font-weight: bold;
-    margin-top: 20px;
-    color: white;
+  #title-enikki {
+    color: white !important;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    top: 45%;
-    left: 15%;
     z-index: 10;
-    /* スクロールコンテンツより手前に */
   }
 
   /* スクロールコンテナ */
@@ -63,6 +56,20 @@
 
   .enikki-wrapper {
     grid-column: 2;
+  }
+
+  .name-section {
+    width: 100%;
+    color: white;
+  }
+
+  .name-label {
+    font-size: 1.5rem;
+  }
+
+  .name-display {
+    margin-inline-start: 50px;
+    font-size: 2.5rem;
   }
 
   .button-container {
@@ -131,7 +138,8 @@
 {% endblock head %}
 
 {% block body %}
-<h1 class="font-balooda">enikki</h1>
+
+{% include "title-enikki.html" %}
 
 <div class="big-wrapper">
   <div class="wrapper" id="scroll-container">
