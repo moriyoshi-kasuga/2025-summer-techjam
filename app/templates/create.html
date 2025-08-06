@@ -192,11 +192,13 @@
 <div class="main-content" id="fadein-item">
   <header class="name-section">
     <span class="name-label">なまえ</span>
-    <span class="name-display">やまだ たろう</span>
+    <span class="name-display">{{ username }}</span>
   </header>
   <div class="container-wrapper">
     <div class="container">
+      {% with month=month, day=day %}
       {% include 'enikki.html' %}
+      {% endwith %}
       <div class="submit-section">
         <button class="submit-button">
           <span class="arrow"></span>
