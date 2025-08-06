@@ -3,22 +3,21 @@
 {% block head %}
 <link href="/static/css/enikki.css" rel="stylesheet">
 <style>
-.container {
-  margin-block: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 100px;
-}
+  .container {
+    margin-block: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+  }
 
-li {
-  color: white;
-  font-family: "Zen Maru Gothic", sans-serif;
-  font-size: 48px;
-  list-style: none;
-  margin-bottom: 50px;
-}
-
+  .comment {
+    color: white;
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-size: 48px;
+    list-style: none;
+    margin-bottom: 50px;
+  }
 </style>
 {% endblock head %}
 
@@ -33,7 +32,7 @@ li {
 
   <ul>
     {% for comment in comments %}
-    <li>{{ comment }}</li>
+    <li class="comment">{{ comment }}</li>
     {% endfor %}
   </ul>
 </div>

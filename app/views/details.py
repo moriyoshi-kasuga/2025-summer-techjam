@@ -1,30 +1,20 @@
-from datetime import datetime
+from flask import Blueprint, redirect, render_template
+from flask_login import current_user, login_required
 
-from flask import Blueprint, render_template
+from app.models import Comment, Post
 
-from app.models import Post
-
-blueprint = Blueprint("details", __name__)
+blueprint = Blueprint("details", __name__, url_prefix="/details")
 
 
 @blueprint.route("/<int:post_id>")
+@login_required
 def details(post_id: int):
-    post = Post(id="test", content="サンプル内容", created_at=datetime.now())
-    comments = ["サンプル1", "サンプル2"]
-    # user_id = current_user.id
-    # post: Post | None = Post.query.filter(
-    #     Post.id == post_id, Post.author_id == user_id
-    # ).one_or_none()
-    # if post is None:
-    #     return redirect("/mypage")
-    #
-    # object_comments: List[Comment] = Comment.query.filter(
-    #     Comment.post_id == post.id
-    # ).order_by(Comment.created_at)
-    #
-    # comments: List[str] = []
-    # for v in object_comments:
-    #     comments.append(v.content)
+    # ログインユーザーの投稿のみを取得
+    post = Post.query.filter_by(id=post_id, author_id=current_user.id).one_or_none()
+    if post is None:
+        return redirect("/mypage")
+
+    comments = Comment.query.filter_by(post_id=post.id).order_by(Comment.created_at).all()
 
     return render_template(
         "details.html",
