@@ -1,0 +1,66 @@
+.enikki__main {
+  --radius: 20px;
+  --total-height: 600px;
+  --body-height: 330px;
+  --background: #437555;
+  width: 400px;
+  height: var(--total-height);
+  border-radius: var(--radius);
+  background-color: white;
+  border: 5px, solid, white;
+  padding: 3px;
+}
+
+.enikki__drawing-canvas {
+  height: calc(var(--total-height) - var(--body-height));
+  width: 100%;
+  border-radius: var(--radius) var(--radius) 0 0;
+  box-sizing: border-box;
+}
+
+.enikki__body {
+  height: var(--body-height);
+  display: flex;
+}
+
+.enikki__content {
+  width: 100%;
+  margin-right: 3px;
+  border-radius: 0 0 0 var(--radius);
+  background-color: var(--background);
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-family: "HuiFont", sans-serif;
+  font-size: 2.2rem;
+  color: white;
+  resize: none;
+  border: none;
+  word-break: break-all;
+}
+
+.enikki__date {
+  --children-height: calc(var(--body-height) / 5);
+  width: 50px;
+  height: var(--body-height);
+  border-radius: 0 0 var(--radius) 0;
+  background-color: var(--background);
+}
+
+.enikki__date>p {
+  height: var(--children-height);
+  margin: 0;
+  padding: 0;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  margin: 0 auto;
+  font-size: 1.7rem;
+  font-family: "Zen Maru Gothic", sans-serif;
+}
+
+.enikki__date>p:nth-child(odd) {
+  text-align: end;
+}
+
+.enikki__date>p:nth-child(even) {
+  text-align: start;
+}
