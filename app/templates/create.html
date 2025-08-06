@@ -51,7 +51,7 @@
     opacity: 1;
   }
 
-    .background{
+  .background {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -62,7 +62,7 @@
     transition: opacity 2s ease;
   }
 
-  .fade-out{
+  .fade-out {
     opacity: 0;
   }
 
@@ -104,45 +104,42 @@
     cursor: pointer;
   }
 
-  .red {
+  #red {
     background-color: red;
   }
 
-  .orange {
+  #orange {
     background-color: orange;
   }
 
-  .yellow {
+  #yellow {
     background-color: yellow;
   }
 
-  .green {
+  #green {
     background-color: green;
   }
 
-  .blue {
+  #blue {
     background-color: blue;
   }
 
-  .black {
+  #black {
     background-color: black;
   }
 
-  .rainbow {
+  #rainbow {
     background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
   }
 
-  .eraser-container img {
+  #eraser-container img {
     width: 30px;
     height: auto;
     cursor: pointer;
   }
 
-  .submit-section {
+  #submit-button {
     margin-top: 20px;
-  }
-
-  .submit-button {
     width: 518px;
     display: flex;
     align-items: center;
@@ -170,6 +167,8 @@
   }
 </style>
 <link href="/static/css/enikki.css" rel="stylesheet">
+<script src="/static/js/simple-drawing-board.min.js"></script>
+
 {% endblock head %}
 
 {% block body %}
@@ -179,8 +178,8 @@
 <script>
   window.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(() => {
-      const enikki = document.getElementById('fadein-item'); 
-      const title = document.getElementById('fadein-text'); 
+      const enikki = document.getElementById('fadein-item');
+      const title = document.getElementById('fadein-text');
       const bg = document.getElementById('fedeout-bg');
       enikki.classList.add("fade-in");
       title.classList.add("fade-in");
@@ -192,35 +191,35 @@
 <div class="main-content" id="fadein-item">
   <header class="name-section">
     <span class="name-label">なまえ</span>
-    <span class="name-display">やまだ たろう</span>
+    <span class="name-display">{{ username }}</span>
   </header>
   <div class="container-wrapper">
     <div class="container">
+      {% with month=month, day=day %}
       {% include 'enikki.html' %}
-      <div class="submit-section">
-        <button class="submit-button">
-          <span class="arrow"></span>
-          <span class="submit-text">提出する</span>
-        </button>
-      </div>
+      {% endwith %}
+      <button id="submit-button">
+        <span class="arrow"></span>
+        <span class="submit-text">提出する</span>
+      </button>
     </div>
     <div class="tools-panel">
       <div class="color-palette">
-        <button class="color-dot red"></button>
-        <button class="color-dot orange"></button>
-        <button class="color-dot yellow"></button>
-        <button class="color-dot green"></button>
-        <button class="color-dot blue"></button>
-        <button class="color-dot black"></button>
-        <button class="color-dot rainbow"></button>
+        <button id="red" class="color-dot"></button>
+        <button id="orange" class="color-dot"></button>
+        <button id="yellow" class="color-dot"></button>
+        <button id="green" class="color-dot"></button>
+        <button id="blue" class="color-dot"></button>
+        <button id="black" class="color-dot"></button>
+        <button id="rainbow" class="color-dot"></button>
       </div>
-      <div class="eraser-container">
+      <div id="eraser-container">
         <img src="/static/images/eraser.png" alt="消しゴム">
       </div>
     </div>
   </div>
 </div>
 
-
+<script src="/static/js/create.js"></script>
 
 {% endblock body %}
