@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+  body {
+    position: relative;
+  }
+  .box{
+    width: 90%;
+    max-width: 1500px;
+    margin: 0 auto;
+    margin-top: 150px;
+  }
+  h1{
+    color :#ffffff;
+    font-size: 64px;
+    margin-bottom: 30px;
+  }
+  .table-wrapper{
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-y: scroll !important;
+    display: block;
+  }
+  table{
+    width: 100%;
+    table-layout: fixed;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: left;
+    color: rgb(22, 22, 22);
+    background-color: white;
+    border-collapse: separate;     /* ← 重要：border-radiusが効くようにする */
+    border: 4px solid rgb(22,22,22);       /* 外枠の線 */
+    border-radius: 10px;           /* 外枠の角丸 */
+    border-spacing: 0;  
+  }
+  th, td {
+    border: 2px solid rgb(22, 22, 22);        /* セル内の区切り線 */
+    padding: 8px;
+    text-align: left;
+    height: 30px;
+  }
+  th {
+    font-size: 20px;
+    overflow: hidden;
+  }
+  td{
+    font-size: 20px;
+    overflow: hidden;
+    a{
+        text-decoration: none;
+        color: rgb(0, 0, 0);
+    }
+  }
+</style>
+
+{% endblock head %}
+
+{% block body %}
+
+<div class="box">
+    <h1 class="font-zenmaru">管理者用ページ(通報者一覧)</h1>
+    <div class="table-wrapper">
+      <table class="font-zenmaru">
+          <colgroup>
+              <col style="width: 100px;"> <!-- 1列目の幅 -->
+              <col style="width: 150px;">  <!-- 2列目以降（自動調整） -->
+              <col style="width: 200px;">  <!-- 2列目以降（自動調整） -->
+              <col style="width: 150px;">  <!-- 2列目以降（自動調整） -->
+          </colgroup>
+          <tr>
+              <th>日付</th>
+              <th>名前</th>
+              <th>メールアドレス</th>
+              <th>通報者名前</th>
+          </tr>
+          {% for data in datas %}
+          <tr>
+              <td>{{ data[0] }}</td>
+              <td><a href="#">{{ data[1] }}</a></td>
+              <td>{{ data[2] }}</td>
+              <td>{{ data[3] }}</td>
+          </tr>
+          {% endfor %}
+      </table>
+    </div>
+</div>
+
+{% endblock body %}
