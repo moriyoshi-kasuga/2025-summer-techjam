@@ -5,13 +5,14 @@ from flask import Blueprint, jsonify, render_template, request
 from flask_login import current_user, login_required
 
 from app import db
-from app.models import Comment, Favorite, Post
+from app.models import Comment, Favorite, Post, User
 
 blueprint = Blueprint("view", __name__, url_prefix="/view")
 
 
 @dataclasses.dataclass
 class View:
+    author_name: str
     post: Post
     is_favorite: bool
     comment: str | None
@@ -29,6 +30,7 @@ def view():
 
     views = []
     for post in posts_today:
+        author = User.query.get(post.author_id)
         is_favorite = (
             Favorite.query.filter_by(user_id=current_user.id, post_id=post.id).first()
             is not None
@@ -38,7 +40,14 @@ def view():
         ).first()
         comment_content = comment_obj.content if comment_obj else None
 
-        views.append(View(post=post, is_favorite=is_favorite, comment=comment_content))
+        views.append(
+            View(
+                author_name=author.name,
+                post=post,
+                is_favorite=is_favorite,
+                comment=comment_content,
+            )
+        )
 
     return render_template("view.html", views=views)
 
@@ -84,4 +93,3 @@ def add_comment(post_id: int):
 
     db.session.commit()
     return jsonify({"success": True, "comment": content})
-

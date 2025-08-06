@@ -149,6 +149,10 @@
       {% for view in views %}
       <li class="view" id="post-{{ view.post.id }}">
         <div class="enikki-wrapper">
+          <header class="name-section font-zenmaru">
+            <span class="name-label">なまえ</span>
+            <span class="name-display">{{ view.author_name }}</span>
+          </header>
           {% with month=view.post.created_at.month, day=view.post.created_at.day, content=view.post.content,
           image_id=view.post.id %}
           {% include 'enikki.html' %}
