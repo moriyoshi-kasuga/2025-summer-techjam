@@ -17,6 +17,14 @@ for (let i = 0; i < targets.length; i++) {
   })
 }
 
+const colorPicker = document.getElementById("color-picker");
+colorPicker.addEventListener("input", (e) => {
+  if (sdb.mode == "erase") {
+    sdb.toggleMode()
+  }
+  sdb.setLineColor(e.target.value);
+});
+
 const eraser = document.getElementById("eraser-container")
 
 eraser.addEventListener("click", () => {

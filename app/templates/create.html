@@ -130,8 +130,31 @@
     background-color: black;
   }
 
-  #rainbow {
-    background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
+  #color-picker {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: transparent;
+    margin-bottom: 10px;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+    background-image: conic-gradient(from 90deg, violet, indigo, blue, green, yellow, orange, red, violet);
+    background-origin: border-box;
+  }
+
+  #color-picker::-webkit-color-swatch {
+    border-radius: 50%;
+    border: none;
+  }
+
+  #color-picker::-moz-color-swatch {
+    border-radius: 50%;
+    border: none;
   }
 
   #eraser-container img {
@@ -213,7 +236,7 @@
         <button id="green" class="color-dot"></button>
         <button id="blue" class="color-dot"></button>
         <button id="black" class="color-dot"></button>
-        <button id="rainbow" class="color-dot"></button>
+        <input type="color" id="color-picker" value="#ffffff">
       </div>
       <div id="eraser-container">
         <img src="/static/images/eraser.png" alt="消しゴム">
