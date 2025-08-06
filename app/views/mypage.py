@@ -1,8 +1,8 @@
 from datetime import datetime
 from typing import List
 
-from flask import Blueprint, redirect, render_template
-from flask_login import current_user
+from flask import Blueprint, render_template
+from flask_login import current_user, login_required
 
 from app.models import Post, User
 
@@ -10,9 +10,8 @@ blueprint = Blueprint("mypage", __name__)
 
 
 @blueprint.route("/")
+@login_required
 def mypage():
-    if current_user is None:
-        return redirect("/login")
     user: User = current_user
     posts: List[Post] = (
         Post.query.filter(Post.author_id == user.id).order_by(Post.created_at).all()
