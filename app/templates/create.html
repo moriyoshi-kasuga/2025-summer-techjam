@@ -142,9 +142,9 @@
     background-color: transparent;
     margin-bottom: 10px;
     border: 2px solid transparent;
-    box-sizing: border-box;
     background-image: conic-gradient(from 90deg, violet, indigo, blue, green, yellow, orange, red, violet);
     background-origin: border-box;
+    background-clip: content-box, border-box;
   }
 
   #color-picker::-webkit-color-swatch {
@@ -157,10 +157,15 @@
     border: none;
   }
 
-  #eraser-container img {
+  #eraser-container img,
+  #clear-container img {
     width: 30px;
     height: auto;
     cursor: pointer;
+  }
+
+  #clear-container {
+    margin-top: 20px;
   }
 
   #submit-button {
@@ -240,6 +245,9 @@
       </div>
       <div id="eraser-container">
         <img src="/static/images/eraser.png" alt="消しゴム">
+      </div>
+      <div id="clear-container">
+        <img src="/static/icons/trash.png" alt="クリア">
       </div>
     </div>
   </div>

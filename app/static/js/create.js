@@ -33,6 +33,11 @@ eraser.addEventListener("click", () => {
   }
 })
 
+const clearButton = document.getElementById("clear-container");
+clearButton.addEventListener("click", () => {
+    sdb.clear();
+});
+
 document.getElementById("submit-button").addEventListener("click", async () => {
   const content = document.getElementsByClassName("enikki__content")[0].value
   if (content == null || content.length == 0) {
