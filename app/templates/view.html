@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+  .font-balooda {
+    font-size: 60px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 45%;
+    left: 15%;
+  }
+
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 10px;
+  }
+
+  .circle-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background-color: white;
+    color: #444;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .circle-btn.marked{
+    filter: saturate(0%);
+  }
+
+  img {
+    width: 80%;
+    /* margin-top: 5px; */
+  }
+
+  .f-icon {
+    width: 115%;
+    margin-left: -3.5px;
+  }
+
+  .circle-btn:hover {
+    background-color: #ddd;
+  }
+
+  #comment-input {
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 500px;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: white;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease-in-out;
+    z-index: 1000;
+  }
+
+  #comment-input.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  ul.view{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+    padding-inline-start: 0px;
+    margin-bottom: 100px;
+    /* gap: 100px; */
+    li.view{
+      margin-top: 60px;
+    }
+  }
+
+  .wrapper{
+    height: 100dvh;
+    overflow-y: auto;
+
+  }
+
+  .small-wrapper{
+    margin-top: 100px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 32px;
+  }
+
+
+</style>
+<link href="/static/css/enikki.css" rel="stylesheet">
+{% endblock head %}
+
+{% block body %}
+<h1 class="font-balooda">enikki</h1>
+
+<div class="big-wrapper">
+  <div class="wrapper">
+    <ul class="view">
+      {% for view in views %}
+      <!-- <li class="view">{{ view.is_favorite }}</li> -->
+      <div class="small-wrapper">
+        {% with month=view.post.created_at.month, day=view.post.created_at.day, content=view.post.content %}
+        {% include 'enikki.html' %}
+        {% endwith %}
+        <div class="button-container">
+            <button class="circle-btn" id="item-{{ loop.index }}" data-fav="{{ view.is_favorite }}">
+              <img src="{{ url_for('static', filename='icons/F.png') }}" class="f-icon" alt="花丸アイコン">
+            </button>
+        
+            <button class="circle-btn" id="send-btn">
+              <img src="{{ url_for('static', filename='icons/comments.png') }}">
+            </button>
+          
+            <input type="text" id="comment-input" placeholder="コメントを入力" maxlength="20">
+
+            <button class="circle-btn">
+              <img src="{{ url_for('static', filename='icons/three-dots.png') }}" alt="三点リーダー">
+            </button>
+          </div>
+        </div>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".circle-btn");
+    buttons.forEach(btn => {
+      if (btn.dataset.fav === "True") {
+        btn.classList.add("marked");
+      }
+    });
+  });
+</script>
+
+  <!-- <div class="button-container">
+    <button class="circle-btn">
+      <img src="{{ url_for('static', filename='icons/F.png') }}" class="f-icon" alt="花丸アイコン">
+    </button>
+  
+    <button class="circle-btn" id="send-btn">
+      <img src="{{ url_for('static', filename='icons/comments.png') }}">
+    </button>
+  
+    <input type="text" id="comment-input" placeholder="コメントを入力" maxlength="20">
+  
+    <button class="circle-btn">
+      <img src="{{ url_for('static', filename='icons/three-dots.png') }}" alt="三点リーダー">
+    </button>
+  </div> -->
+
+</div>
+
+<script>
+  const btn = document.getElementById("send-btn");
+  const input = document.getElementById("comment-input");
+
+  btn.addEventListener("click", () => {
+    input.classList.toggle("show");
+
+    if (input.classList.contains("show")) {
+      input.focus();
+    } else {
+      input.blur();
+    }
+  });
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && input.value.trim() !== "") {
+      console.log("送信されたコメント:", input.value);
+      input.value = "";
+      input.classList.add("hidden");
+    }
+  });
+</script>
+{% endblock body %}
