@@ -8,16 +8,14 @@
 
 {% block body %}
 
-{{ post.created_at }}
-
 <ul>
   {% for comment in comments %}
   <li>{{ comment }}</li>
   {% endfor %}
 </ul>
 
-{ % with month=post.created_at.month, day=post.created_at.day, content=post.content %}
-    {% include 'enikki.html' %}
-{ % endwith %}
+{% with month=post.created_at.month, day=post.created_at.day, content=post.content %}
+{% include 'enikki.html' %}
+{% endwith %}
 
 {% endblock body %}
