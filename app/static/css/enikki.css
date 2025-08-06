@@ -1,9 +1,9 @@
 .enikki__main {
   --radius: 20px;
-  --total-height: 600px;
-  --body-height: 330px;
+  --total-height: 850px;
+  --body-height: 400px;
   --background: #437555;
-  width: 400px;
+  width: 550px;
   height: var(--total-height);
   border-radius: var(--radius);
   background-color: white;
@@ -45,6 +45,7 @@
   height: var(--body-height);
   border-radius: 0 0 var(--radius) 0;
   background-color: var(--background);
+  color: #fff;
 }
 
 .enikki__date>p {

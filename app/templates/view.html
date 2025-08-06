@@ -14,12 +14,10 @@
   }
 
   .button-container {
-    position: fixed;
-    bottom: 100px;
-    right: 400px;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    margin-bottom: 10px;
   }
 
   .circle-btn {
@@ -34,9 +32,13 @@
     transition: background-color 0.2s;
   }
 
+  .circle-btn.marked{
+    filter: saturate(0%);
+  }
+
   img {
     width: 80%;
-    margin-top: 5px;
+    /* margin-top: 5px; */
   }
 
   .f-icon {
@@ -72,6 +74,37 @@
     opacity: 1;
     pointer-events: auto;
   }
+
+  ul.view{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+    padding-inline-start: 0px;
+    margin-bottom: 100px;
+    /* gap: 100px; */
+    li.view{
+      margin-top: 60px;
+    }
+  }
+
+  .wrapper{
+    height: 100dvh;
+    overflow-y: auto;
+
+  }
+
+  .small-wrapper{
+    margin-top: 100px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 32px;
+  }
+
+
 </style>
 <link href="/static/css/enikki.css" rel="stylesheet">
 {% endblock head %}
@@ -79,32 +112,62 @@
 {% block body %}
 <h1 class="font-balooda">enikki</h1>
 
-<ul>
-  {% for view in views %}
-  <li>{{ view.is_favorite }}</li>
-  <li>{{ view.comment }}</li>
-  {% with month=view.post.created_at.month, day=view.post.created_at.day, content=view.post.content %}
-  {% include 'enikki.html' %}
-  {% endwith %}
-  {% endfor %}
-</ul>
+<div class="big-wrapper">
+  <div class="wrapper">
+    <ul class="view">
+      {% for view in views %}
+      <!-- <li class="view">{{ view.is_favorite }}</li> -->
+      <div class="small-wrapper">
+        {% with month=view.post.created_at.month, day=view.post.created_at.day, content=view.post.content %}
+        {% include 'enikki.html' %}
+        {% endwith %}
+        <div class="button-container">
+            <button class="circle-btn" id="item-{{ loop.index }}" data-fav="{{ view.is_favorite }}">
+              <img src="{{ url_for('static', filename='icons/F.png') }}" class="f-icon" alt="花丸アイコン">
+            </button>
+        
+            <button class="circle-btn" id="send-btn">
+              <img src="{{ url_for('static', filename='icons/comments.png') }}">
+            </button>
+          
+            <input type="text" id="comment-input" placeholder="コメントを入力" maxlength="20">
 
+            <button class="circle-btn">
+              <img src="{{ url_for('static', filename='icons/three-dots.png') }}" alt="三点リーダー">
+            </button>
+          </div>
+        </div>
+      {% endfor %}
+    </ul>
+  </div>
 
-<div class="button-container">
-  <button class="circle-btn">
-    <img src="{{ url_for('static', filename='icons/F.png') }}" class="f-icon" alt="花丸アイコン">
-  </button>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".circle-btn");
+    buttons.forEach(btn => {
+      if (btn.dataset.fav === "True") {
+        btn.classList.add("marked");
+      }
+    });
+  });
+</script>
 
-  <button class="circle-btn" id="send-btn">
-    <img src="{{ url_for('static', filename='icons/comments.png') }}">
-  </button>
+  <!-- <div class="button-container">
+    <button class="circle-btn">
+      <img src="{{ url_for('static', filename='icons/F.png') }}" class="f-icon" alt="花丸アイコン">
+    </button>
+  
+    <button class="circle-btn" id="send-btn">
+      <img src="{{ url_for('static', filename='icons/comments.png') }}">
+    </button>
+  
+    <input type="text" id="comment-input" placeholder="コメントを入力" maxlength="20">
+  
+    <button class="circle-btn">
+      <img src="{{ url_for('static', filename='icons/three-dots.png') }}" alt="三点リーダー">
+    </button>
+  </div> -->
 
-
-  <input type="text" id="comment-input" placeholder="コメントを入力" maxlength="20">
-
-  <button class="circle-btn">
-    <img src="{{ url_for('static', filename='icons/three-dots.png') }}" alt="三点リーダー">
-  </button>
 </div>
 
 <script>
