@@ -12,11 +12,7 @@
 
   <body>
     <div class="edge"></div>
-    <div class="texture-box">
-      <div class="texture">
-        <img src="{{ url_for('static', filename='images/texture1.jpg') }}" alt="">
-      </div>
-    </div>
+    <div id="texture"></div>
     <div id="container">
       {% block body %}
       {% endblock %}
