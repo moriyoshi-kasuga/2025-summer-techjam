@@ -26,7 +26,7 @@
 <div class="container">
   <h1 class="font-balooda">enikki</h1>
 
-  {% with month=post.created_at.month, day=post.created_at.day, content=post.content %}
+  {% with month=post.created_at.month, day=post.created_at.day, content=post.content, image_id=post.id %}
   {% include 'enikki.html' %}
   {% endwith %}
 
