@@ -9,22 +9,6 @@
     height: 100vh;
   }
 
-  h1 {
-    font-size: 64px;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    left: 16%;
-    top: 43%;
-    color: #5F5C5C;
-    transition: color 3s ease;
-  }
-
-  h1.fade-in {
-    color: #fff;
-  }
-
   .logo {
     font-size: 48px;
     font-weight: bold;
@@ -33,10 +17,10 @@
 
   .main-content {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     opacity: 0;
     transition: opacity 3s ease;
+    justify-content: center;
+    margin-left: 30px;
   }
 
   .fade-in {
@@ -61,16 +45,16 @@
   }
 
   .name-section {
-    margin-bottom: 10px;
-    margin: 0 auto;
+    width: 100%;
+  }
+
+  .name-label {
+    font-size: 1.5rem;
   }
 
   .name-display {
     margin-inline-start: 50px;
-  }
-
-  .container-wrapper {
-    display: flex;
+    font-size: 2.5rem;
   }
 
   .container {
@@ -80,7 +64,9 @@
   }
 
   .tools-panel {
-    margin-left: 30px;
+    width: 30px;
+    margin-left: 10px;
+    margin-top: 3.5rem;
   }
 
   .color-palette {
@@ -210,36 +196,34 @@
 </script>
 
 <div class="main-content" id="fadein-item">
-  <header class="name-section">
-    <span class="name-label">なまえ</span>
-    <span class="name-display">{{ username }}</span>
-  </header>
-  <div class="container-wrapper">
-    <div class="container">
-      {% with month=month, day=day %}
-      {% include 'enikki.html' %}
-      {% endwith %}
-      <button id="submit-button">
-        <span class="arrow"></span>
-        <span class="submit-text">提出する</span>
-      </button>
+  <div class="container">
+    <header class="name-section font-zenmaru">
+      <span class="name-label">なまえ</span>
+      <span class="name-display">{{ username }}</span>
+    </header>
+    {% with month=month, day=day %}
+    {% include 'enikki.html' %}
+    {% endwith %}
+    <button id="submit-button">
+      <span class="arrow"></span>
+      <span class="submit-text">提出する</span>
+    </button>
+  </div>
+  <div class="tools-panel">
+    <div class="color-palette">
+      <button id="red" class="color-dot"></button>
+      <button id="orange" class="color-dot"></button>
+      <button id="yellow" class="color-dot"></button>
+      <button id="green" class="color-dot"></button>
+      <button id="blue" class="color-dot"></button>
+      <button id="black" class="color-dot"></button>
+      <input type="color" id="color-picker" value="#ffffff">
     </div>
-    <div class="tools-panel">
-      <div class="color-palette">
-        <button id="red" class="color-dot"></button>
-        <button id="orange" class="color-dot"></button>
-        <button id="yellow" class="color-dot"></button>
-        <button id="green" class="color-dot"></button>
-        <button id="blue" class="color-dot"></button>
-        <button id="black" class="color-dot"></button>
-        <input type="color" id="color-picker" value="#ffffff">
-      </div>
-      <div id="eraser-container">
-        <img src="/static/images/eraser.png" alt="消しゴム">
-      </div>
-      <div id="clear-container">
-        <img src="/static/icons/trash.png" alt="クリア">
-      </div>
+    <div id="eraser-container">
+      <img src="/static/images/eraser.png" alt="消しゴム">
+    </div>
+    <div id="clear-container">
+      <img src="/static/icons/trash.png" alt="クリア">
     </div>
   </div>
 </div>
