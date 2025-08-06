@@ -50,7 +50,6 @@ body> :not(.edge) {
   width: 100dvw;
   height: 100dvh;
   z-index: -1;
-  background-image: url('/static/images/texture1.jpg');
 }
 
 .font-balooda {
