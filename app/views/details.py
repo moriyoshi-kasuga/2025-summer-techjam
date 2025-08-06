@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from flask import Blueprint, render_template
-from flask_login import login_required
 
 from app.models import Post
 
@@ -9,7 +8,6 @@ blueprint = Blueprint("details", __name__)
 
 
 @blueprint.route("/<int:post_id>")
-@login_required
 def details(post_id: int):
     post = Post(id="test", content="サンプル内容", created_at=datetime.now())
     comments = ["サンプル1", "サンプル2"]
