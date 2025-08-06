@@ -56,8 +56,10 @@ body> :not(.edge) {
   position: absolute;
   left: -25px;
   top: 10px;
+  width: 100px !important;
   ul{
     list-style: none;
+    width: 50px;
     display: flex;
     flex-direction: column;
     gap: 20px;
