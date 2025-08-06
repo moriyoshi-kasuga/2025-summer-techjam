@@ -5,29 +5,22 @@
 <style>
   .container {
     display: grid;
-    /* 3列グリッドを作成: 左余白 | 中央コンテンツ | 右余白/コメント */
     grid-template-columns: 1fr auto 1fr;
     align-items: start;
-    /* 上端揃え */
     gap: 50px;
-    /* 列間のギャップ */
     width: 100%;
     padding: 10dvh 20px;
-    /* 左右の余白 */
     box-sizing: border-box;
     height: 100dvh;
   }
 
   .enikki-wrapper {
     grid-column: 2;
-    /* 絵日記を中央の列に配置 */
   }
 
   .comment-section {
     grid-column: 3;
-    /* コメントを右の列に配置 */
     justify-self: start;
-    /* 列の左端に配置 */
     color: white;
     font-family: "Zen Maru Gothic", sans-serif;
     width: 100%;
@@ -38,7 +31,6 @@
     list-style: none;
     padding: 0;
     max-height: 500px;
-    /* 高さを制限してスクロール可能に */
     overflow-y: auto;
   }
 
@@ -48,7 +40,6 @@
     align-items: center;
     margin-bottom: 20px;
     padding-right: 10px;
-    /* スクロールバーとの余白 */
   }
 
   .comment-item.hidden .comment-content {
@@ -68,7 +59,6 @@
     color: white;
     cursor: pointer;
     flex-shrink: 0;
-    /* ボタンが縮まないように */
   }
 
   .hide-btn:disabled {

@@ -1,8 +1,8 @@
-from flask import Blueprint, redirect, render_template, jsonify
+from flask import Blueprint, jsonify, redirect, render_template
 from flask_login import current_user, login_required
 
 from app import db
-from app.models import Comment, Post, HiddenComment
+from app.models import Comment, HiddenComment, Post
 
 blueprint = Blueprint("details", __name__, url_prefix="/details")
 
@@ -14,17 +14,14 @@ def details(post_id: int):
     if post is None:
         return redirect("/mypage")
 
-    # 投稿に紐づくコメントと、非表示コメントのIDを取得
-    comments_raw = Comment.query.filter_by(post_id=post.id).order_by(Comment.created_at).all()
-    hidden_comment_ids = {hc.comment_id for hc in HiddenComment.query.all()} # 本来はpost_idで絞り込むべきだが、簡単のため全件取得
+    comments_raw = (
+        Comment.query.filter_by(post_id=post.id).order_by(Comment.created_at).all()
+    )
+    hidden_comment_ids = {hc.comment_id for hc in HiddenComment.query.all()}
 
-    # テンプレートに渡すためのデータを作成
     comments_data = []
     for c in comments_raw:
-        comments_data.append({
-            "comment": c,
-            "is_hidden": c.id in hidden_comment_ids
-        })
+        comments_data.append({"comment": c, "is_hidden": c.id in hidden_comment_ids})
 
     return render_template(
         "details.html",
@@ -39,11 +36,9 @@ def hide_comment(comment_id: int):
     comment = Comment.query.get_or_404(comment_id)
     post = Post.query.get_or_404(comment.post_id)
 
-    # 投稿者本人でなければ操作不可
     if post.author_id != current_user.id:
         return jsonify({"success": False, "error": "権限がありません"}), 403
 
-    # 既に非表示になっていないか確認
     is_already_hidden = HiddenComment.query.get(comment_id) is not None
     if is_already_hidden:
         return jsonify({"success": False, "error": "既に非表示です"})
@@ -53,3 +48,4 @@ def hide_comment(comment_id: int):
     db.session.commit()
 
     return jsonify({"success": True})
+
