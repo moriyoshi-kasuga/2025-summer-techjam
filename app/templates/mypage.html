@@ -75,23 +75,12 @@
   <div class="name__line"></div>
   <h2 class="daily__title font-zenmaru">これまでのえにっき</h2>
   <div class="daily__list font-zenmaru">
-    <!-- TODO: ここに jinja の loop のテンプレートで複数表示する -->
+    {% for post in posts %}
     <div class="daily__item">
-      <h3 class="daily__date">10月5日</h3>
-      <img class="daily__image" src="https://placehold.jp/300x200.png" alt="Sample Image">
+      <h3 class="daily__date">{post.date}</h3>
+      <img class="daily__image" src="/static/image/?id={{ post.id }}">
     </div>
-    <div class="daily__item">
-      <h3 class="daily__date">10月4日</h3>
-      <img class="daily__image" src="https://placehold.jp/300x200.png" alt="Sample Image">
-    </div>
-    <div class="daily__item">
-      <h3 class="daily__date">10月3日</h3>
-      <img class="daily__image" src="https://placehold.jp/300x200.png" alt="Sample Image">
-    </div>
-    <div class="daily__item">
-      <h3 class="daily__date">10月2日</h3>
-      <img class="daily__image" src="https://placehold.jp/300x200.png" alt="Sample Image">
-    </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock body %}
