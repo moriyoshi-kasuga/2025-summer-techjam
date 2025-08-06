@@ -138,11 +138,8 @@
     cursor: pointer;
   }
 
-  .submit-section {
+  #submit-button {
     margin-top: 20px;
-  }
-
-  .submit-button {
     width: 518px;
     display: flex;
     align-items: center;
@@ -201,12 +198,10 @@
       {% with month=month, day=day %}
       {% include 'enikki.html' %}
       {% endwith %}
-      <div class="submit-section">
-        <button class="submit-button">
-          <span class="arrow"></span>
-          <span class="submit-text">提出する</span>
-        </button>
-      </div>
+      <button id="submit-button">
+        <span class="arrow"></span>
+        <span class="submit-text">提出する</span>
+      </button>
     </div>
     <div class="tools-panel">
       <div class="color-palette">
