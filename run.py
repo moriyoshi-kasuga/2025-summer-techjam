@@ -9,6 +9,10 @@ from app import app
 # launch
 # ----------------------------------------
 
+upload_image_dir = "./app/views/images"
+if not os.path.exists(upload_image_dir):
+    os.mkdir(upload_image_dir)
+
 filename = "./app/static/js/simple-drawing-board.min.js"
 if not os.path.exists(filename):
     url = "https://raw.githubusercontent.com/leaysgur/simple-drawing-board.js/refs/heads/main/dist/simple-drawing-board.min.js"
