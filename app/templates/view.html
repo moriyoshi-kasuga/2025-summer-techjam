@@ -38,7 +38,6 @@
 
   img {
     width: 80%;
-    /* margin-top: 5px; */
   }
 
   .f-icon {
@@ -50,7 +49,7 @@
     background-color: #ddd;
   }
 
-  #comment-input {
+  .comment-input {
     position: fixed;
     bottom: 50px;
     left: 50%;
@@ -70,7 +69,7 @@
     z-index: 1000;
   }
 
-  #comment-input.show {
+  .comment-input.show {
     opacity: 1;
     pointer-events: auto;
   }
@@ -85,7 +84,6 @@
     padding-inline-start: 0px;
     margin-bottom: 100px;
 
-    /* gap: 100px; */
     li.view {
       margin-top: 60px;
     }
@@ -113,64 +111,109 @@
 
 <div class="big-wrapper">
   <div class="wrapper">
-    <ul class="view">
+    <ul class="view" id="view-list">
       {% for view in views %}
-      <!-- <li class="view">{{ view.is_favorite }}</li> -->
-      <div class="small-wrapper">
-        {% with month=view.post.created_at.month, day=view.post.created_at.day, content=view.post.content,
-        image_id=view.post.id %}
-        {% include 'enikki.html' %}
-        {% endwith %}
-        <div class="button-container">
-          <button class="circle-btn" id="item-{{ loop.index }}" data-fav="{{ view.is_favorite }}">
-            <img src="/static/icons/F.png" class="f-icon" alt="花丸アイコン">
-          </button>
+      <li class="view" id="post-{{ view.post.id }}">
+        <div class="small-wrapper">
+          {% with month=view.post.created_at.month, day=view.post.created_at.day, content=view.post.content,
+          image_id=view.post.id %}
+          {% include 'enikki.html' %}
+          {% endwith %}
+          <div class="button-container">
+            <button class="circle-btn favorite-btn {% if view.is_favorite %}marked{% endif %}"
+              data-post-id="{{ view.post.id }}">
+              <img src="/static/icons/F.png" class="f-icon" alt="花丸アイコン">
+            </button>
 
-          <button class="circle-btn" id="send-btn">
-            <img src="/static/icons/comments.png">
-          </button>
+            <button class="circle-btn comment-btn" data-post-id="{{ view.post.id }}">
+              <img src="/static/icons/comments.png">
+            </button>
 
-          <input type="text" id="comment-input" placeholder="コメントを入力" maxlength="20">
-
-          <button class="circle-btn">
-            <img src="/static/icons/three-dots.png" alt="三点リーダー">
-          </button>
+            <button class="circle-btn report-btn" data-post-id="{{ view.post.id }}">
+              <img src="/static/icons/three-dots.png" alt="三点リーダー">
+            </button>
+          </div>
         </div>
-      </div>
+        <input type="text" class="comment-input" data-post-id="{{ view.post.id }}" placeholder="コメントを入力 (Enterで送信)"
+          value="{{ view.comment or '' }}" maxlength="20">
+      </li>
       {% endfor %}
     </ul>
   </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const buttons = document.querySelectorAll(".circle-btn");
-      buttons.forEach(btn => {
-        if (btn.dataset.fav === "True") {
-          btn.classList.add("marked");
-        }
-      });
-    });
-  </script>
 </div>
 
 <script>
-  const btn = document.getElementById("send-btn");
-  const input = document.getElementById("comment-input");
+  document.addEventListener('DOMContentLoaded', () => {
+    const viewList = document.getElementById('view-list');
 
-  btn.addEventListener("click", () => {
-    input.classList.toggle("show");
+    viewList.addEventListener('click', (e) => {
+      const favoriteBtn = e.target.closest('.favorite-btn');
+      const commentBtn = e.target.closest('.comment-btn');
 
-    if (input.classList.contains("show")) {
-      input.focus();
-    } else {
-      input.blur();
+      if (favoriteBtn) {
+        toggleFavorite(favoriteBtn);
+      }
+
+      if (commentBtn) {
+        toggleCommentInput(commentBtn);
+      }
+    });
+
+    viewList.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.target.classList.contains('comment-input')) {
+        submitComment(e.target);
+      }
+    });
+
+    function toggleFavorite(button) {
+      const postId = button.dataset.postId;
+      fetch(`/view/post/${postId}/favorite`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            button.classList.toggle('marked', data.is_favorite);
+          }
+        })
+        .catch(err => console.error('Favorite toggle failed:', err));
     }
-  });
-  input.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" && input.value.trim() !== "") {
-      console.log("送信されたコメント:", input.value);
-      input.value = "";
-      input.classList.add("hidden");
+
+    function toggleCommentInput(button) {
+      const postId = button.dataset.postId;
+      const targetInput = document.querySelector(`.comment-input[data-post-id="${postId}"]`);
+      const isCurrentlyShown = targetInput.classList.contains('show');
+
+      document.querySelectorAll('.comment-input').forEach(input => {
+        input.classList.remove('show');
+      });
+
+      if (!isCurrentlyShown) {
+        targetInput.classList.add('show');
+        targetInput.focus();
+      }
+    }
+
+    function submitComment(input) {
+      const postId = input.dataset.postId;
+      const content = input.value.trim();
+
+      fetch(`/view/post/${postId}/comment`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({content: content}),
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            console.log(`Comment ${data.action}:`, content);
+            input.classList.remove('show');
+          } else {
+            alert('コメントの処理に失敗しました。');
+          }
+        })
+        .catch(err => console.error('Comment submission failed:', err));
     }
   });
 </script>
