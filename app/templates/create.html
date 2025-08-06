@@ -104,35 +104,35 @@
     cursor: pointer;
   }
 
-  .red {
+  #red {
     background-color: red;
   }
 
-  .orange {
+  #orange {
     background-color: orange;
   }
 
-  .yellow {
+  #yellow {
     background-color: yellow;
   }
 
-  .green {
+  #green {
     background-color: green;
   }
 
-  .blue {
+  #blue {
     background-color: blue;
   }
 
-  .black {
+  #black {
     background-color: black;
   }
 
-  .rainbow {
+  #rainbow {
     background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);
   }
 
-  .eraser-container img {
+  #eraser-container img {
     width: 30px;
     height: auto;
     cursor: pointer;
@@ -210,15 +210,15 @@
     </div>
     <div class="tools-panel">
       <div class="color-palette">
-        <button class="color-dot red"></button>
-        <button class="color-dot orange"></button>
-        <button class="color-dot yellow"></button>
-        <button class="color-dot green"></button>
-        <button class="color-dot blue"></button>
-        <button class="color-dot black"></button>
-        <button class="color-dot rainbow"></button>
+        <button id="red" class="color-dot"></button>
+        <button id="orange" class="color-dot"></button>
+        <button id="yellow" class="color-dot"></button>
+        <button id="green" class="color-dot"></button>
+        <button id="blue" class="color-dot"></button>
+        <button id="black" class="color-dot"></button>
+        <button id="rainbow" class="color-dot"></button>
       </div>
-      <div class="eraser-container">
+      <div id="eraser-container">
         <img src="/static/images/eraser.png" alt="消しゴム">
       </div>
     </div>
