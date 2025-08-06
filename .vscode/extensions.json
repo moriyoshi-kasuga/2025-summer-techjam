@@ -3,6 +3,7 @@
     "charliermarsh.ruff",
     "usernamehw.errorlens",
     "mosapride.zenkaku",
-    "aaron-bond.better-comments"
+    "aaron-bond.better-comments",
+    "EditorConfig.EditorConfig"
   ]
 }

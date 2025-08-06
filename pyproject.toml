@@ -1,5 +1,6 @@
 [tool.ruff]
 line-length = 88
+indent-width = 4
 fix = true
 
 [tool.ruff.lint.pydocstyle]
@@ -7,3 +8,5 @@ convention = "google"
 
 [tool.ruff.format]
 quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
