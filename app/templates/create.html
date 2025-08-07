@@ -2,6 +2,17 @@
 
 {% block head %}
 <style>
+  .enikki__content::placeholder {
+    color: #bfbfbf;
+    font-style: italic;
+  }
+
+  #title-enikki {
+    color: white !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+
   body {
     color: white;
     justify-content: center;
@@ -185,7 +196,7 @@
 <script>
   window.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(() => {
-      const enikki = document.getElementById('fadein-item');
+      const enikki = document.getElementById('create-form');
       const title = document.getElementById('title-enikki');
       const bg = document.getElementById('fedeout-bg');
       enikki.classList.add("fade-in");
@@ -195,7 +206,7 @@
   });
 </script>
 
-<div class="main-content" id="fadein-item">
+<form class="main-content" id="create-form" method="post" action="#">
   <div class="container">
     <header class="name-section font-zenmaru">
       <span class="name-label">なまえ</span>
@@ -204,19 +215,20 @@
     {% with month=month, day=day %}
     {% include 'enikki.html' %}
     {% endwith %}
-    <button id="submit-button">
+    <input type="hidden" name="image" id="image-data">
+    <button type="submit" id="submit-button">
       <span class="arrow"></span>
       <span class="submit-text">提出する</span>
     </button>
   </div>
   <div class="tools-panel">
     <div class="color-palette">
-      <button id="red" class="color-dot"></button>
-      <button id="orange" class="color-dot"></button>
-      <button id="yellow" class="color-dot"></button>
-      <button id="green" class="color-dot"></button>
-      <button id="blue" class="color-dot"></button>
-      <button id="black" class="color-dot"></button>
+      <button id="red" class="color-dot" type="button"></button>
+      <button id="orange" class="color-dot" type="button"></button>
+      <button id="yellow" class="color-dot" type="button"></button>
+      <button id="green" class="color-dot" type="button"></button>
+      <button id="blue" class="color-dot" type="button"></button>
+      <button id="black" class="color-dot" type="button"></button>
       <input type="color" id="color-picker" value="#ffffff">
     </div>
     <div id="eraser-container">
@@ -226,7 +238,7 @@
       <img src="/static/icons/trash.png" alt="クリア">
     </div>
   </div>
-</div>
+</form>
 
 <script src="/static/js/create.js"></script>
 

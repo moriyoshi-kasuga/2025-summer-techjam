@@ -1,4 +1,5 @@
 from datetime import datetime
+import base64
 
 from flask import Blueprint, current_app, redirect, render_template, request
 from flask_login import current_user, login_required
@@ -21,12 +22,14 @@ def create():
             "create.html", username=username, month=date.month, day=date.day
         )
     content = request.form.get("content")
-    image = request.files.get("image")
+    image_data_url = request.form.get("image")
     if content is None or len(content) == 0:
         return render_template("create.html")
     current_app.logger.info("hey")
     post = Post(content=content, author_id=user_id)
     db.session.add(post)
     db.session.commit()
-    save_image(post.id, image)
+    # Remove the "data:image/png;base64," prefix
+    image_data = base64.b64decode(image_data_url.split(",")[1])
+    save_image(post.id, image_data)
     return redirect("/view")
