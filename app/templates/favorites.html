@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block head %}
+<style>
+  #mypage {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .name__line {
+    width: 100%;
+    height: 6px;
+    border-radius: 2px;
+    background-color: #ffffff;
+    margin: 0 0 20px 0;
+  }
+
+  .name__block>* {
+    margin: 0;
+    padding: 0;
+  }
+
+  .name__block {
+    margin: 20px 0 3px 0;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+  }
+
+  .name__title {
+    font-size: 2.5rem;
+    color: #ffffff;
+  }
+
+  .name__username {
+    font-size: 3.5rem;
+    color: #ffffff;
+  }
+
+  .name__change {
+    /* TODO: Add link to change username */
+    opacity: 0;
+  }
+
+  .daily__title {
+    font-size: 2.7rem;
+    color: #ffffff;
+    margin: 40px 0;
+    text-align: center;
+  }
+
+  .daily__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 20px;
+    column-gap: 20px;
+  }
+
+  .daily__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+  }
+
+  .daily__date {
+    font-size: 1.8rem;
+    color: #ffffff;
+    margin: 0;
+  }
+</style>
+{% endblock head %}
+{% block body %}
+<div id="mypage">
+  <div class="name__block font-zenmaru">
+    <h2 class="name__title">なまえ</h2>
+    <h1 class="name__username">{{ username }}</h1>
+    <h3 class="name__change">変更する</h3>
+  </div>
+  <div class="name__line"></div>
+  <h2 class="daily__title font-zenmaru">これまでのえにっき</h2>
+  <div class="daily__list font-zenmaru">
+    {% for post in posts %}
+    <a href="/details/{{ post.id }}" class="daily__item">
+      <h3 class="daily__date">{{ post.date }}</h3>
+      <img class="daily__image" src="/image/?id={{ post.id }}">
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock body %}
