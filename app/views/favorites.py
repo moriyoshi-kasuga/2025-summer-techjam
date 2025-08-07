@@ -22,10 +22,20 @@ def favorites():
     post_ids = [fav.post_id for fav in favorites]
 
     posts: List[Post] = Post.query.filter(Post.id.in_(post_ids)).all()
+    users: List[User] = User.query.filter(
+        User.id.in_([post.author_id for post in posts])
+    ).all()
+    dict_usernames = {user.id: user.name for user in users}
 
     formatted_posts = []
     for post in posts:
         date: datetime = post.created_at
-        formatted_posts.append({"id": post.id, "date": f"{date.month}月{date.day}日"})
+        formatted_posts.append(
+            {
+                "id": post.id,
+                "date": f"{date.month}月{date.day}日",
+                "author_name": dict_usernames.get(post.author_id, "Unknown Author"),
+            }
+        )
 
     return render_template("favorites.html", username=user.name, posts=formatted_posts)
