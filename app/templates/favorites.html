@@ -49,38 +49,32 @@
   }
 
   .daily__list {
-    /* display: flex; */
-    /* flex-wrap: wrap; */
-    /* justify-content: space-between; */
-    width: 100%;
-    row-gap: 20px;
-    column-gap: 20px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 50px;
   }
 
   .daily__item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 300px;
-    text-decoration: none;
-    /* gap: 20px; */
+    width: 100%;
   }
 
-  .daily__image{
+  .daily__image {
     background-color: #ffffff;
     border: #ffffff solid 5px;
     aspect-ratio: 3/2;
     border-radius: 10px;
     margin-top: 12px;
-    &:hover{
+
+    &:hover {
       border: #a3a3a3 solid 5px;
     }
   }
 
-  .wrapper{
+  .wrapper {
     position: relative;
     overflow: hidden;
     border-radius: 10px;
@@ -90,9 +84,10 @@
     font-size: 1.8rem;
     color: #ffffff;
     margin: 0;
+    margin-left: 10px;
   }
 
-  .daily__name{
+  .daily__name {
     font-size: 1.6rem;
     color: #ffffff;
     width: 100%;
@@ -103,6 +98,38 @@
     position: absolute;
     bottom: 0;
     border-radius: 0 0 10px 10px;
+  }
+
+  @media (max-width: 992px) {
+    #mypage {
+      width: 90%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .name__title {
+      font-size: 2rem;
+    }
+
+    .name__username {
+      font-size: 2.8rem;
+    }
+
+    .daily__title {
+      font-size: 2.2rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .name__block {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .daily__list {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
 {% endblock head %}
@@ -117,15 +144,15 @@
   <h2 class="daily__title font-zenmaru">お気に入りのえにっき</h2>
   <div class="daily__list font-zenmaru">
     {% for post in posts %}
-      <div>
-        <h3 class="daily__date">{{ post.date }}</h3>
-        <a href="/details/{{ post.id }}" class="daily__item">
-          <div class="wrapper">
-            <img class="daily__image" src="/image/?id={{ post.id }}">
-            <h3 class="daily__name">{{ post.author_name }}</h3>
-          </div>
-        </a>
-      </div>
+    <div>
+      <h3 class="daily__date">{{ post.date }}</h3>
+      <a href="/details/{{ post.id }}" class="daily__item">
+        <div class="wrapper">
+          <img class="daily__image" src="/image/?id={{ post.id }}">
+          <h3 class="daily__name">{{ post.author_name }}</h3>
+        </div>
+      </a>
+    </div>
     {% endfor %}
   </div>
 </div>

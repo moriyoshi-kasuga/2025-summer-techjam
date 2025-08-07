@@ -57,24 +57,24 @@ body>.edge {
   left: -25px;
   top: 10px;
   width: 100px !important;
-}
 
-.menuber ul {
-  list-style: none;
-  width: 50px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
+  ul {
+    list-style: none;
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 
-.menuber img {
-  width: 50px;
-  transition: .3s;
-}
+  img {
+    width: 50px;
+    transition: .3s;
 
-.menuber img:hover {
-  filter: brightness(200%);
-  scale: 1.1;
+    &:hover {
+      filter: brightness(200%);
+      scale: 1.1;
+    }
+  }
 }
 
 .font-balooda {
