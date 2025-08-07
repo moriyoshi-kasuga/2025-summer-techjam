@@ -37,14 +37,14 @@ body>.edge {
   height: 100dvh;
 }
 
-body> :not(.edge) {
+#container {
   width: calc(100dvw - var(--edge-width) * 2);
 }
 
 #texture {
   filter: grayscale(100%);
   mix-blend-mode: multiply;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100dvw;
@@ -52,26 +52,29 @@ body> :not(.edge) {
   z-index: -1;
 }
 
-.menuber{
+.menuber {
   position: absolute;
   left: -25px;
   top: 10px;
   width: 100px !important;
-  ul{
-    list-style: none;
-    width: 50px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  img{
-    width: 50px;
-    transition: .3s;
-    &:hover{
-      filter: brightness(200%);
-      scale: 1.1;
-    }
-  }
+}
+
+.menuber ul {
+  list-style: none;
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menuber img {
+  width: 50px;
+  transition: .3s;
+}
+
+.menuber img:hover {
+  filter: brightness(200%);
+  scale: 1.1;
 }
 
 .font-balooda {
@@ -87,4 +90,45 @@ body> :not(.edge) {
 .font-hui {
   font-family: "HuiFont", sans-serif;
   font-optical-sizing: auto;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  body>.edge {
+    display: none;
+  }
+
+  .menuber {
+    position: fixed;
+    left: 0;
+    top: auto;
+    bottom: 0;
+    width: 100% !important;
+    background-color: var(--site-edge-color);
+    z-index: 1000;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menuber ul {
+    margin: 0;
+    padding: 0;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    gap: 10px;
+  }
+
+  .menuber img {
+    width: 40px;
+  }
+
+  #container {
+    height: calc(100dvh - 60px);
+    width: 100dvw;
+    position: absolute;
+    top: 0;
+  }
 }

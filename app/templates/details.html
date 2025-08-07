@@ -72,6 +72,26 @@
     color: #888;
     cursor: not-allowed;
   }
+
+  @media screen and (max-width: 768px) {
+    .container {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 20px;
+      height: auto;
+    }
+
+    .enikki-wrapper,
+    .comment-section {
+      grid-column: 1;
+      justify-self: center;
+    }
+
+    .comment-section {
+      margin-top: 20px;
+      max-width: 100%;
+    }
+  }
 </style>
 {% endblock head %}
 
