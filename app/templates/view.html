@@ -9,7 +9,7 @@
   }
 
   .wrapper {
-    height: 100dvh;
+    height: calc(100dvh - 60px);
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
@@ -124,7 +124,7 @@
 
   @media screen and (max-width: 768px) {
     li.view {
-      height: auto;
+      height: calc(100dvh - 60px);
       grid-template-columns: 1fr;
       gap: 20px;
       align-content: center;
@@ -173,43 +173,40 @@
 
 {% block body %}
 
-{% include "title-enikki.html" %}
 
-<div class="big-wrapper">
-  <div class="wrapper" id="scroll-container">
-    <ul class="view" id="view-list">
-      {% for view in views %}
-      <li class="view" id="post-{{ view.post.id }}">
-        <div class="enikki-wrapper">
-          <header class="name-section font-zenmaru">
-            <span class="name-label">なまえ</span>
-            <span class="name-display">{{ view.author_name }}</span>
-          </header>
-          {% with month=view.post.created_at.month, day=view.post.created_at.day, content=view.post.content,
-          image_id=view.post.id %}
-          {% include 'enikki.html' %}
-          {% endwith %}
-        </div>
-        <div class="button-container">
-          <button class="circle-btn favorite-btn {% if view.is_favorite %}marked{% endif %}"
-            data-post-id="{{ view.post.id }}">
-            <img src="/static/icons/F.png" class="f-icon" alt="花丸アイコン">
-          </button>
+<div class="wrapper" id="scroll-container">
+  <ul class="view" id="view-list">
+    {% for view in views %}
+    <li class="view" id="post-{{ view.post.id }}">
+      <div class="enikki-wrapper">
+        <header class="name-section font-zenmaru">
+          <span class="name-label">なまえ</span>
+          <span class="name-display">{{ view.author_name }}</span>
+        </header>
+        {% with month=view.post.created_at.month, day=view.post.created_at.day, content=view.post.content,
+        image_id=view.post.id %}
+        {% include 'enikki.html' %}
+        {% endwith %}
+      </div>
+      <div class="button-container">
+        <button class="circle-btn favorite-btn {% if view.is_favorite %}marked{% endif %}"
+          data-post-id="{{ view.post.id }}">
+          <img src="/static/icons/F.png" class="f-icon" alt="花丸アイコン">
+        </button>
 
-          <button class="circle-btn comment-btn" data-post-id="{{ view.post.id }}">
-            <img src="/static/icons/comments.png">
-          </button>
+        <button class="circle-btn comment-btn" data-post-id="{{ view.post.id }}">
+          <img src="/static/icons/comments.png">
+        </button>
 
-          <button class="circle-btn report-btn" data-post-id="{{ view.post.id }}">
-            <img src="/static/icons/three-dots.png" alt="三点リーダー">
-          </button>
-        </div>
-        <input type="text" class="comment-input" data-post-id="{{ view.post.id }}" placeholder="コメントを入力 (Enterで送信)"
-          value="{{ view.comment or '' }}" maxlength="20">
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
+        <button class="circle-btn report-btn" data-post-id="{{ view.post.id }}">
+          <img src="/static/icons/three-dots.png" alt="三点リーダー">
+        </button>
+      </div>
+      <input type="text" class="comment-input" data-post-id="{{ view.post.id }}" placeholder="コメントを入力 (Enterで送信)"
+        value="{{ view.comment or '' }}" maxlength="20">
+    </li>
+    {% endfor %}
+  </ul>
 </div>
 
 <script>

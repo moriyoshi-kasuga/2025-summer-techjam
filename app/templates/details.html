@@ -97,8 +97,6 @@
 
 {% block body %}
 
-{% include "title-enikki.html" %}
-
 <div class="container">
   <div class="enikki-wrapper">
     {% with month=post.created_at.month, day=post.created_at.day, content=post.content, image_id=post.id %}
