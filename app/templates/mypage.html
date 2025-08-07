@@ -36,11 +36,22 @@
     color: #ffffff;
   }
 
+  
   .name__change {
     /* TODO: Add link to change username */
     opacity: 0;
   }
-
+  
+  .daily__image{
+    background-color: #ffffff;
+    border: #ffffff solid 5px;
+    aspect-ratio: 3/2;
+    border-radius: 10px;
+    margin-top: 12px;
+    &:hover{
+      border: #a3a3a3 solid 5px;
+    }
+  }
   .daily__title {
     font-size: 2.7rem;
     color: #ffffff;
@@ -49,11 +60,14 @@
   }
 
   .daily__list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    /* justify-content: space-between; */
     row-gap: 20px;
     column-gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
   }
 
   .daily__item {
@@ -81,10 +95,12 @@
   <h2 class="daily__title font-zenmaru">これまでのえにっき</h2>
   <div class="daily__list font-zenmaru">
     {% for post in posts %}
-    <a href="/details/{{ post.id }}" class="daily__item">
+    <div>
       <h3 class="daily__date">{{ post.date }}</h3>
-      <img class="daily__image" src="/image/?id={{ post.id }}">
-    </a>
+      <a href="/details/{{ post.id }}" class="daily__item">
+        <img class="daily__image" src="/image/?id={{ post.id }}">
+      </a>
+    </div>
     {% endfor %}
   </div>
 </div>
