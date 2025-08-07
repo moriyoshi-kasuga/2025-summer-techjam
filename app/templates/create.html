@@ -185,7 +185,7 @@
 <script>
   window.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(() => {
-      const enikki = document.getElementById('fadein-item');
+      const enikki = document.getElementById('create-form');
       const title = document.getElementById('title-enikki');
       const bg = document.getElementById('fedeout-bg');
       enikki.classList.add("fade-in");
@@ -195,7 +195,7 @@
   });
 </script>
 
-<div class="main-content" id="fadein-item">
+<form class="main-content" id="create-form" method="post" action="#">
   <div class="container">
     <header class="name-section font-zenmaru">
       <span class="name-label">なまえ</span>
@@ -204,7 +204,8 @@
     {% with month=month, day=day %}
     {% include 'enikki.html' %}
     {% endwith %}
-    <button id="submit-button">
+    <input type="hidden" name="image" id="image-data">
+    <button type="submit" id="submit-button">
       <span class="arrow"></span>
       <span class="submit-text">提出する</span>
     </button>
@@ -226,7 +227,7 @@
       <img src="/static/icons/trash.png" alt="クリア">
     </div>
   </div>
-</div>
+</form>
 
 <script src="/static/js/create.js"></script>
 

@@ -1,13 +1,14 @@
 from flask import Blueprint, Response, request
-from werkzeug.datastructures import FileStorage
+
 
 blueprint = Blueprint(
     "image", __name__, static_folder="images", static_url_path="/images"
 )
 
 
-def save_image(id: str, image: FileStorage):
-    image.save(f"{blueprint.static_folder}/{id}")
+def save_image(id: str, image_data: bytes):
+    with open(f"{blueprint.static_folder}/{id}", "wb") as f:
+        f.write(image_data)
 
 
 @blueprint.route("/", methods=["GET"])

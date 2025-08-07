@@ -44,26 +44,13 @@ clearButton.addEventListener("click", () => {
     sdb.clear();
 });
 
-document.getElementById("submit-button").addEventListener("click", async () => {
+document.getElementById("create-form").addEventListener("submit", (e) => {
   const content = document.getElementsByClassName("enikki__content")[0].value
   if (content == null || content.length == 0) {
     alert("空では提出できません")
+    e.preventDefault();
     return
   }
-  canvas.toBlob((blob) => {
-    const formData = new FormData();
-    formData.set("content", content)
-    formData.append("image", blob, "canvas.png");
-    fetch("/create", {
-      method: "POST",
-      body: formData,
-      redirect: 'follow'
-    })
-      .then(res => {
-        if (res.redirected) {
-          window.location.href = res.url;
-        }
-      });
-  },
-    "image/png")
+  const imageData = canvas.toDataURL("image/png");
+  document.getElementById("image-data").value = imageData;
 })
