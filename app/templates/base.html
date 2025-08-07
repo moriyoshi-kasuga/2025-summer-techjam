@@ -11,8 +11,9 @@
   </head>
 
   <body>
-    <div class="edge"></div>
+    <div class="edge left"></div>
     <img id="texture" src="/static/images/texture1.jpg">
+    {% include "title-enikki.html" %}
     <div class="menuber">
       <ul>
         <li><a href="/view"><img src="/static/icons/home.png" alt=""></a></li>
@@ -25,7 +26,7 @@
       {% block body %}
       {% endblock %}
     </div>
-    <div class="edge"></div>
+    <div class="edge right"></div>
   </body>
 
 </html>
