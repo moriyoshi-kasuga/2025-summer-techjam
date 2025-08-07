@@ -1,7 +1,10 @@
 const canvas = document.getElementsByClassName("enikki__drawing-canvas")[0]
 const sdb = SimpleDrawingBoard.create(canvas)
 
-sdb.setLineSize(4);
+const drawSize = 4
+const eraserSize = 8
+
+sdb.setLineSize(drawSize);
 sdb.setLineColor("blue");
 
 const targets = ["red", "orange", "yellow", "green", "blue", "black"]
@@ -14,8 +17,18 @@ for (let i = 0; i < targets.length; i++) {
       sdb.toggleMode()
     }
     sdb.setLineColor(target)
+    sdb.setLineSize(drawSize);
   })
 }
+
+const colorPicker = document.getElementById("color-picker");
+colorPicker.addEventListener("input", (e) => {
+  if (sdb.mode == "erase") {
+    sdb.toggleMode()
+  }
+  sdb.setLineColor(e.target.value);
+  sdb.setLineSize(drawSize);
+});
 
 const eraser = document.getElementById("eraser-container")
 
@@ -23,7 +36,13 @@ eraser.addEventListener("click", () => {
   if (sdb.mode == "draw") {
     sdb.toggleMode()
   }
+  sdb.setLineSize(eraserSize);
 })
+
+const clearButton = document.getElementById("clear-container");
+clearButton.addEventListener("click", () => {
+    sdb.clear();
+});
 
 document.getElementById("submit-button").addEventListener("click", async () => {
   const content = document.getElementsByClassName("enikki__content")[0].value

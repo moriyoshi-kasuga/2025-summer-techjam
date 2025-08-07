@@ -1,7 +1,7 @@
 .enikki__main {
   --radius: 20px;
-  --total-height: 850px;
-  --body-height: 400px;
+  --total-height: 80dvh;
+  --body-height: 40dvh;
   --background: #437555;
   width: 550px;
   height: var(--total-height);
