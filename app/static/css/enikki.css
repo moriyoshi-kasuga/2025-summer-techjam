@@ -11,6 +11,14 @@
   padding: 3px;
 }
 
+@media screen and (max-width: 768px) {
+  .enikki__main {
+    width: 80vw !important;
+    --total-height: 70dvh !important;
+    --body-height: 35dvh !important;
+  }
+}
+
 .enikki__drawing-canvas {
   height: calc(var(--total-height) - var(--body-height));
   width: 100%;
@@ -65,4 +73,25 @@
 
 .enikki__date>p:nth-child(even) {
   text-align: start;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .enikki__main {
+    width: 95vw;
+    --total-height: 70dvh;
+    --body-height: 35dvh;
+  }
+
+  .enikki__content {
+    font-size: 1.8rem;
+  }
+
+  .enikki__date {
+    width: 40px;
+  }
+
+  .enikki__date>p {
+    font-size: 1.4rem;
+  }
 }

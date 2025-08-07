@@ -31,6 +31,7 @@
     opacity: 0;
     transition: opacity 3s ease;
     justify-content: center;
+    height: 100%;
     margin-left: 30px;
   }
 
@@ -182,6 +183,39 @@
     border-bottom: 10px solid transparent;
     border-left: 10px solid white;
     margin-right: 10px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .main-content {
+      flex-direction: column;
+      align-items: center;
+      margin-left: 0;
+    }
+
+    .tools-panel {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      margin-left: 0;
+      margin-bottom: 10px;
+      gap: 15px;
+    }
+
+    .color-palette {
+      flex-direction: row;
+      gap: 10px;
+    }
+
+    .color-dot {
+      margin-bottom: 0;
+    }
+
+    #clear-container {
+      margin-top: 0;
+    }
   }
 </style>
 <link href="/static/css/enikki.css" rel="stylesheet">
