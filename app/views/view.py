@@ -1,5 +1,5 @@
 import dataclasses
-from datetime import date
+from datetime import date, timedelta
 
 from flask import Blueprint, jsonify, render_template, request
 from flask_login import current_user, login_required
@@ -21,9 +21,9 @@ class View:
 @blueprint.route("/")
 @login_required
 def view():
-    today = date.today()
+    recently = date.today() - timedelta(days=5)
     posts_today = (
-        Post.query.filter(db.func.date(Post.created_at) == today)
+        Post.query.filter(db.func.date(Post.created_at) > recently)
         .order_by(Post.created_at.desc())
         .all()
     )
