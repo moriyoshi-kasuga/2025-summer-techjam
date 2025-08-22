@@ -4,7 +4,7 @@ import base64
 from flask import Blueprint, current_app, redirect, render_template, request
 from flask_login import current_user, login_required
 
-from app import db
+from app import db, socketio
 from app.models import Post, User
 from app.views.image import save_image
 
@@ -32,4 +32,5 @@ def create():
     # Remove the "data:image/png;base64," prefix
     image_data = base64.b64decode(image_data_url.split(",")[1])
     save_image(post.id, image_data)
+    socketio.emit("new_post")
     return redirect("/view")

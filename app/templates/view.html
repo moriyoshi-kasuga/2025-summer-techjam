@@ -8,31 +8,35 @@
     z-index: 10;
   }
 
-  .wrapper {
-    height: 100dvh;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
-  }
-
   .wrapper::-webkit-scrollbar {
     display: none;
   }
 
   .wrapper {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    height: 100dvh;
+
+    overflow-anchor: none;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    scroll-snap-type: y mandatory;
+    scroll-snap-stop: normal;
+    scroll-behavior: auto;
   }
 
-  ul.view {
+  #view-list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
     margin: 0;
     padding: 0;
-    list-style: none;
   }
 
-  li.view {
+  .view {
     height: 100dvh;
     scroll-snap-align: start;
+    scroll-snap-stop: normal;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
@@ -44,6 +48,7 @@
 
   .enikki-wrapper {
     grid-column: 2;
+    margin-bottom: 20px;
   }
 
   .name-section {
@@ -123,12 +128,7 @@
   }
 
   @media screen and (max-width: 768px) {
-    .wrapper {
-      height: calc(100dvh - 60px);
-    }
-
     li.view {
-      height: calc(100dvh - 60px);
       grid-template-columns: 1fr;
       gap: 20px;
       align-content: center;
@@ -138,6 +138,7 @@
       grid-column: 1;
       justify-self: center;
       align-self: center;
+      margin-bottom: 0;
     }
 
     .name-section {
@@ -159,7 +160,6 @@
       margin: 0;
       margin-left: auto;
       margin-right: auto;
-      margin-top: 20px;
     }
 
     .circle-btn {
@@ -179,7 +179,7 @@
 
 
 <div class="wrapper" id="scroll-container">
-  <ul class="view" id="view-list">
+  <div id="view-list">
     {% for view in views %}
     <li class="view" id="post-{{ view.post.id }}">
       <div class="enikki-wrapper">
@@ -210,9 +210,10 @@
         value="{{ view.comment or '' }}" maxlength="20">
     </li>
     {% endfor %}
-  </ul>
+  </div>
 </div>
 
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('scroll-container');
@@ -220,128 +221,97 @@
     let startY;
     let scrollTop;
     let isScrolling = false; // スクロールアニメーション中かどうかのフラグ
+    let postCount = document.querySelectorAll('.view').length;
 
-    container.addEventListener('mousedown', (e) => {
-      if (isScrolling) return; // アニメーション中は操作を無視
-      isDown = true;
-      container.style.cursor = 'grabbing';
-      startY = e.pageY - container.offsetTop;
-      scrollTop = container.scrollTop;
-    });
+    let shouldReload = false;
 
-    container.addEventListener('mouseleave', () => {
-      if (isScrolling) return;
-      isDown = false;
-      container.style.cursor = 'grab';
-    });
+    function getCurrentItemIndex() {
+      return Math.round(container.scrollTop / window.innerHeight);
+    }
 
-    container.addEventListener('mouseup', (e) => {
-      if (isScrolling || !isDown) return;
-      isDown = false;
-      container.style.cursor = 'grab';
-
-      const y = e.pageY - container.offsetTop;
-      const walk = y - startY;
-      const threshold = 100; // スクロールをトリガーする最小移動量
-      const itemHeight = window.innerHeight;
-      const currentItemIndex = Math.round(container.scrollTop / itemHeight);
-
-      let targetIndex = currentItemIndex;
-      if (walk < -threshold) { // 上にドラッグ
-        targetIndex = currentItemIndex + 1;
-      } else if (walk > threshold) { // 下にドラッグ
-        targetIndex = currentItemIndex - 1;
+    const socket = io();
+    socket.on('new_post', function () {
+      const currentItemIndex = getCurrentItemIndex();
+      if (currentItemIndex === 0) {
+        location.reload();
+      } else {
+        shouldReload = true; // スクロール中はリロードしない
       }
-
-      const postCount = {{views| length
-    }};
-  if (targetIndex >= 0 && targetIndex < postCount) {
-    isScrolling = true; // スクロールアニメーション開始
-    container.scrollTo({top: targetIndex * itemHeight, behavior: 'smooth'});
-
-    // アニメーション時間(500ms)後にフラグを解除
-    setTimeout(() => {
-      isScrolling = false;
-    }, 500);
-  } else {
-    // 閾値に満たない場合は元の位置に戻す
-    container.scrollTo({top: currentItemIndex * itemHeight, behavior: 'smooth'});
-  }
-  });
-
-  container.addEventListener('mousemove', (e) => {
-    if (!isDown || isScrolling) return;
-    e.preventDefault();
-    const y = e.pageY - container.offsetTop;
-    const walk = y - startY;
-    container.scrollTop = scrollTop - walk;
-  });
-
-  // --- 以下、ボタン操作などのJS（変更なし） ---
-  const viewList = document.getElementById('view-list');
-  viewList.addEventListener('click', (e) => {
-    const favoriteBtn = e.target.closest('.favorite-btn');
-    const commentBtn = e.target.closest('.comment-btn');
-    if (favoriteBtn) toggleFavorite(favoriteBtn);
-    if (commentBtn) toggleCommentInput(commentBtn);
-  });
-
-  viewList.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && e.target.classList.contains('comment-input')) {
-      submitComment(e.target);
-    }
-  });
-
-  function toggleFavorite(button) {
-    const postId = button.dataset.postId;
-    fetch(`/view/post/${postId}/favorite`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          button.classList.toggle('marked', data.is_favorite);
-        }
-      })
-      .catch(err => console.error('Favorite toggle failed:', err));
-  }
-
-  function toggleCommentInput(button) {
-    const postId = button.dataset.postId;
-    const targetInput = document.querySelector(`.comment-input[data-post-id="${postId}"]`);
-    const isCurrentlyShown = targetInput.classList.contains('show');
-
-    document.querySelectorAll('.comment-input').forEach(input => {
-      input.classList.remove('show');
     });
 
-    if (!isCurrentlyShown) {
-      targetInput.classList.add('show');
-      targetInput.focus();
-    }
-  }
+    container.addEventListener('scrollsnapchange', () => {
+      const currentItemIndex = getCurrentItemIndex();
+      if (shouldReload && currentItemIndex === 0) {
+        // スクロールが最初のアイテムに戻ったときにリロード
+        location.reload();
+      }
+    });
 
-  function submitComment(input) {
-    const postId = input.dataset.postId;
-    const content = input.value.trim();
+    // --- 以下、ボタン操作などのJS（変更なし） ---
+    const viewList = document.getElementById('view-list');
+    viewList.addEventListener('click', (e) => {
+      const favoriteBtn = e.target.closest('.favorite-btn');
+      const commentBtn = e.target.closest('.comment-btn');
+      if (favoriteBtn) toggleFavorite(favoriteBtn);
+      if (commentBtn) toggleCommentInput(commentBtn);
+    });
 
-    fetch(`/view/post/${postId}/comment`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({content: content}),
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          console.log(`Comment ${data.action}:`, content);
-          input.classList.remove('show');
-        } else {
-          alert('コメントの処理に失敗しました。');
-        }
+    viewList.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.target.classList.contains('comment-input')) {
+        submitComment(e.target);
+      }
+    });
+
+    function toggleFavorite(button) {
+      const postId = button.dataset.postId;
+      fetch(`/view/post/${postId}/favorite`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
       })
-      .catch(err => console.error('Comment submission failed:', err));
-  }
-});
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            button.classList.toggle('marked', data.is_favorite);
+          }
+        })
+        .catch(err => console.error('Favorite toggle failed:', err));
+    }
+
+    function toggleCommentInput(button) {
+      const postId = button.dataset.postId;
+      const targetInput = document.querySelector(`.comment-input[data-post-id="${postId}"]`);
+      const isCurrentlyShown = targetInput.classList.contains('show');
+
+      document.querySelectorAll('.comment-input').forEach(input => {
+        input.classList.remove('show');
+      });
+
+      if (!isCurrentlyShown) {
+        targetInput.classList.add('show');
+        targetInput.focus();
+      }
+    }
+
+    function submitComment(input) {
+      const postId = input.dataset.postId;
+      const content = input.value.trim();
+
+      fetch(`/view/post/${postId}/comment`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({content: content}),
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            console.log(`Comment ${data.action}:`, content);
+            input.classList.remove('show');
+          } else {
+            alert('コメントの処理に失敗しました。');
+          }
+        })
+        .catch(err => console.error('Comment submission failed:', err));
+    }
+  });
 </script>
 {% endblock body %}

@@ -4,6 +4,7 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_socketio import SocketIO
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 
@@ -12,6 +13,7 @@ app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY") or "dev-secret-key"
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+socketio = SocketIO(app)
 
 login_manager = LoginManager(app)
 login_manager.init_app(app)
